@@ -1,8 +1,8 @@
-# Angular14-Ionic-D3js-Rxjs-MiiLu 
+# Angular14-Ionic-D3js-Rxjs-MiiLu-FrontEnd
 Deployment Guide
 
 ### Description
-Frontend+Backend
+Frontend 
 
 ### Frontend
 ## Prerequisites
