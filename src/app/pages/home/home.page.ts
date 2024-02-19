@@ -117,6 +117,7 @@ export class HomePage implements OnInit {
    * when card-item-drag started
    * */
   dragstarted(): void {
+    alert('drag');
     d3.select(this as any).raise();
     const transform = d3.select(this as any).attr('transform');
 
@@ -192,8 +193,7 @@ export class HomePage implements OnInit {
     } else {
       d3.select('#g' + i).attr('transform', original);
     }
-  }
-
+  }             
 
 
   /**
@@ -212,12 +212,13 @@ export class HomePage implements OnInit {
       .attr('transform',
         (d, i) => 'translate(' + (i % 3) * this.cardWidth + ',' +
           Math.floor(i / 3) * this.cardHeight + ')')
+      .on('click',  d => this.goToUrl(d)) 
       .call((d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', d => this.dragended(d, this)) as any
-      )
-      );
+      ))
+      .style('cursor','pointer');
 
     g.append('rect')
       .attr('x', 0)
@@ -226,11 +227,7 @@ export class HomePage implements OnInit {
       .attr('height', this.cardHeight)
       .attr('fill', '#ffffff')
       .attr('stroke', '#e4e4e4')
-      .on('click', d => {
-        if (d.active) {
-          this.router.navigateByUrl(d.url);
-        }
-      });
+      .on('click',  d => this.goToUrl(d)) ;
 
     g.append('rect')
       .attr('x', this.cardWidth * 0.2)
@@ -240,11 +237,7 @@ export class HomePage implements OnInit {
       .attr('fill', '#f8f8f8')
       .attr('rx', '5')
       .attr('ry', '5')
-      .on('click', d => {
-        if (d.active) {
-          this.router.navigateByUrl(d.url);
-        }
-      });
+      .on('click',  d => this.goToUrl(d)) ;
 
     g.append('image')
       .attr('x', d => this.cardWidth * 0.2
@@ -256,11 +249,8 @@ export class HomePage implements OnInit {
       .attr('opacity', d => d.active ? 1 : 0.4)
       .attr('xlink:href',
         d => 'assets/image/icon/' + this.getIconClass(d.icon) + '.png')
-      .on('click', d => {
-        if (d.active) {
-          this.router.navigateByUrl(d.url);
-        }
-      });
+      .on('click',  d => this.goToUrl(d)) 
+      ;
 
     g.append('text')
       .attr('x', this.cardWidth * 0.5)
@@ -269,12 +259,17 @@ export class HomePage implements OnInit {
       .attr('font-family', 'Quicksand-Bold')
       .attr('font-size', 0.42 + 'rem')
       .attr('opacity', d => d.active ? 1 : 0.4)
-      .text(d => d.text)
-      .on('click', d => {
-        if (d.active) {
-          this.router.navigateByUrl(d.url);
-        }
-      });
+      .text(d => d.text) 
+      .on('click',  d => this.goToUrl(d)) ;
   }
 
+  /**
+   * dragging card item
+   * */
+  goToUrl(d: any): void {
+    alert(345);
+    if (d.active && d.url) {
+      this.router.navigateByUrl(d.url);
+    }
+  } 
 }
