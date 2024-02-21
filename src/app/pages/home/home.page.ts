@@ -23,7 +23,8 @@ export class HomePage implements OnInit {
   cardHeight = 0;
   cardWidth = 0;
   cardBoxHeight = 0;
-
+  // active card ID
+  activeId : number = -1;
   // cards infor
   cards = [{
     id: 0,
@@ -260,16 +261,47 @@ export class HomePage implements OnInit {
       .attr('font-size', 0.42 + 'rem')
       .attr('opacity', d => d.active ? 1 : 0.4)
       .text(d => d.text) 
-      .on('click',  d => this.goToUrl(d)) ;
+      .on('click',  d => this.goToUrl(d));
   }
 
   /**
    * dragging card item
    * */
-  goToUrl(d: any): void {
-    alert(345);
+  goToUrl(d: any): void { 
     if (d.active && d.url) {
       this.router.navigateByUrl(d.url);
     }
   } 
-}
+
+  /**
+   * get image src
+   * */
+  getImageAddress(d: any):string{
+     return 'assets/image/icon/' + this.getIconClass(d.icon) + '.png';
+  } 
+
+  /**
+   * when starting drag
+   * */
+  onDragStart(event: any, id: number):void { 
+    this.activeId = id; 
+  }
+   
+  
+  /**
+   * when dragging over
+   * */
+  allowDrop(event: any): void {
+    event.preventDefault();
+  }
+  
+  /**
+   * when dropping
+   * */
+  onDrop(event: any, id: number): void {
+    event.preventDefault();
+    console.log('aim: ' + id);
+    const dropId = id; 
+  }
+} 
+

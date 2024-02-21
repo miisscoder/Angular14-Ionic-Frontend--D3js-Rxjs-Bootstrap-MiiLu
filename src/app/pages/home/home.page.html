@@ -12,5 +12,20 @@
             </div>
         </div>
     </div>
-    <div id="buttons" ></div>
+    <div class="gs flex start top wrap">
+        <div class="g" [ngClass]="{'active': item.active === true}" 
+            ondrop="onDrop(event, item.id)"
+            ondragover="allowDrop(event)" 
+            *ngFor="let item of cards" 
+            [routerLink]="item.url">
+            <div class="g-content flex column center middle" 
+                ondragstart="onDragStart(event, item.id)" 
+                draggable="true">
+                <div class="rect">
+                    <img [src]="getImageAddress(item)">
+                </div>
+                <div class="text">{{item.text}}</div>
+            </div>
+        </div>
+    </div>
 </ion-content>
