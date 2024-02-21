@@ -276,15 +276,16 @@ export class HomePage implements OnInit {
   /**
    * get image src
    * */
-  getImageAddress(d: any):string{
+  getImageAddress(d: any): string{
      return 'assets/image/icon/' + this.getIconClass(d.icon) + '.png';
   } 
 
   /**
    * when starting drag
    * */
-  onDragStart(event: any, id: number):void { 
+  onDragStart(event: any, id: number): void { 
     this.activeId = id; 
+    console.log('aim: ' + id);
   }
    
   
