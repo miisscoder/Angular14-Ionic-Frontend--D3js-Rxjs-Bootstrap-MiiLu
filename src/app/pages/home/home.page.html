@@ -1,31 +1,46 @@
 <ion-content #buttons>
-    <div class="top-content">
-        <div class="bk-content">
-            <i class="icon-menu-button" (click)="menuOpen()"></i>
-            <div class="title">Money Management</div>
-            <div class="flex space-between top number">
-                <div class="left-txt">BUDGET LEFT</div>
-                <div class="flex end top right-txt">
-                    <div class="dollar">$</div>
-                    <div class="budget">{{budgetLeft}}</div>
-                </div>
-            </div>
+  <div class="top-content">
+    <div class="bk-content">
+      <i class="icon-menu-button" (click)="menuOpen()"></i>
+      <div class="title">Money Management</div>
+      <div class="flex space-between top number">
+        <div class="left-txt">BUDGET LEFT</div>
+        <div class="flex end top right-txt">
+          <div class="dollar">$</div>
+          <div class="budget">{{budgetLeft}}</div>
         </div>
+      </div>
     </div>
-    <div class="gs flex start top wrap">
-        <div class="g" [ngClass]="{'active': item.active === true}" 
-            (ondrop)="onDrop(event, item.id)"
-            (ondragover)="allowDrop(event)" 
-            *ngFor="let item of cards" 
-            [routerLink]="item.url">
-            <div class="g-content flex column center middle" 
-                (ondragstart)="onDragStart(event, item.id)" 
-                draggable="true">
-                <div class="rect">
-                    <img [src]="getImageAddress(item)">
-                </div>
-                <div class="text">{{item.text}}</div>
-            </div>
+  </div>
+  <div class="gs flex start top wrap">
+    <div class="g" [ngClass]="{'active': item.active === true}"
+         (drop)="onDrop($event,  item.id)"
+         (dragover)="allowDrop($event)"
+         *ngFor="let item of cards"
+         [routerLink]="item.url">
+      <div class="g-content flex column center middle"
+           (dragstart)="onDragStart($event,  item.id)"
+           draggable="true">
+        <div class="rect">
+          <img [src]="getImageAddress(item)">
         </div>
+        <div class="text">{{item.text}}</div>
+      </div>
     </div>
+  </div>
+
+  <div class="group-finger">
+    <div class="group-finger-content">
+      <img src="../../../assets/image/finger.png" class="finger" />
+      <div class="g g-move"
+           [ngClass]="{'active': cards[2].active === true}">
+        <div class="g-content flex column center middle">
+          <div class="rect">
+            <img [src]="getImageAddress(cards[2])">
+          </div>
+          <div class="text">{{ cards[2].text}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

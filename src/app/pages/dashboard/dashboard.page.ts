@@ -34,9 +34,7 @@ export class DashboardPage implements OnInit {
         private dashboardService: DashboardService ) { }
 
     ngOnInit() {
-        this._getDashboardData(); 
-
-
+        this._getDashboardData();  
     }
 
     /**
