@@ -9,13 +9,14 @@
         width: 0.55rem;
         height: 0.55rem;
         display: block;
+        cursor: pointer;
     }
 
     .icon-back {
         background-size: auto 100%;
         width: 0.55rem;
         height: 0.35rem;
-        display: block;
+        cursor: pointer;
     }
 
     .right-nav, .left-nav, .right-nav a {
@@ -23,6 +24,7 @@
         line-height: 0.5rem;
         color: #08a5e1;
         font-family: 'Quicksand-Bold';
+        cursor: pointer;
 
         span {
             margin: 0 0.15rem;
@@ -35,6 +37,7 @@
         height: 0.5rem;
         display: block;
         margin-right: 0.4rem;
+        cursor: pointer;
     }
 
     .icon-filter {
@@ -42,5 +45,6 @@
         width: 0.5rem;
         height: 0.5rem;
         display: block;
+        cursor: pointer;
     }
 }

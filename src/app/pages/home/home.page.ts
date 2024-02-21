@@ -1,17 +1,40 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MenuController } from '@ionic/angular';
-import * as d3 from 'd3';
+import { MenuController } from '@ionic/angular'; 
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { AppService } from '../../services/subject/app.service';
 import { numberCommasToString } from '../../utils/number.util';
 import { swapArrayElements } from '../../utils/array.util';
-import { set } from 'd3';
+ 
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition 
+} from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  styleUrls: ['home.page.scss'], 
+  animations: [
+    trigger('moveFinger', [ 
+      state('startMoveFinger', style({
+        top: '5.4rem',
+        right: 0,
+        display: 'block'
+      })),
+      state('endMoveFinger', style({
+        top: 'calc(5.4rem + 33.33vw)',
+        right: '33.33vw',
+        display: 'none'
+      })),
+      transition('startMoveFinger => endMoveFinger', [
+        animate('0.5s')
+      ]), 
+    ]),
+  ],
 })
 export class HomePage implements OnInit {
   // left budget
@@ -19,6 +42,10 @@ export class HomePage implements OnInit {
    
   //  dragging card ID
   draggingCardId : number = -1;
+
+  // the boolean trigger of animation : move finger
+  isMoveFinger :boolean = false;
+
   // cards infor
   cards = [{
     id: 0,
@@ -82,12 +109,13 @@ export class HomePage implements OnInit {
     this.appService.app$.subscribe(data => { 
       if (data) {
         this.budgetLeft = numberCommasToString(data['budgetLeft']);
+        this.isMoveFinger = true;
+        setTimeout(() => {
+          swapArrayElements(this.cards, 2, 4);
+        }, 600);
       }
     });
 
-    setTimeout(() => {
-      swapArrayElements(this.cards, 2, 4);
-    }, 600);
   }
 
   /**
