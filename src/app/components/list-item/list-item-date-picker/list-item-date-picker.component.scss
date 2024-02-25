@@ -19,6 +19,8 @@
     border-bottom: 0.01rem solid #e4e4e4;
     padding-bottom: 0.2rem;
     padding-top: 0.15rem;
+    cursor: pointer;
+    width: 100%;
 
     ion-datetime-button {
       font-size: 0.5rem;
@@ -28,6 +30,11 @@
       --ion-color-step-300: transparent;
       margin-left: -0.12rem;
       width: calc(100% + 0.12rem);
+
+      &::part(native) {
+        width: calc(100vw - 0.84rem);
+        text-align:left;
+      }
     }
 
     .icon-dropdown {

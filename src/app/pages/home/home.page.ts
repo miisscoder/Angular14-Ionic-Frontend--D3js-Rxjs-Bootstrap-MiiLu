@@ -1,50 +1,44 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MenuController } from '@ionic/angular'; 
+import { MenuController } from '@ionic/angular';
 import * as _ from 'lodash';
+import * as d3 from 'd3';
 import { Router } from '@angular/router';
 import { AppService } from '../../services/subject/app.service';
 import { numberCommasToString } from '../../utils/number.util';
 import { swapArrayElements } from '../../utils/array.util';
- 
+
 import {
   trigger,
   state,
   style,
   animate,
-  transition 
+  transition
 } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'], 
+  styleUrls: ['home.page.scss'],
   animations: [
-    trigger('moveFinger', [ 
+    trigger('moveFinger', [
       state('startMoveFinger', style({
-        top: '5.4rem',
-        right: 0,
-        display: 'block'
+        transform: 'translate(-33.33vw, 33.33vw)',
       })),
-      state('endMoveFinger', style({
-        top: 'calc(5.4rem + 33.33vw)',
-        right: '33.33vw',
-        display: 'none'
-      })),
-      transition('startMoveFinger => endMoveFinger', [
-        animate('0.5s')
-      ]), 
+      transition('void => startMoveFinger', [
+        animate('1s')
+      ]),
     ]),
   ],
 })
 export class HomePage implements OnInit {
   // left budget
   budgetLeft = '';
-   
-  //  dragging card ID
-  draggingCardId : number = -1;
 
-  // the boolean trigger of animation : move finger
-  isMoveFinger :boolean = false;
+  //  dragging card ID
+  draggingCardId: number = -1;
+
+  // show finger
+  isShowFinger: boolean = true;
 
   // cards infor
   cards = [{
@@ -106,16 +100,19 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appService.app$.subscribe(data => { 
+    this.appService.app$.subscribe(data => {
       if (data) {
         this.budgetLeft = numberCommasToString(data['budgetLeft']);
-        this.isMoveFinger = true;
-        setTimeout(() => {
-          swapArrayElements(this.cards, 2, 4);
-        }, 600);
+        sessionStorage.setItem('firstTime', 'false'); 
+        if (sessionStorage.getItem('firstTime') !== 'true') {
+          sessionStorage.setItem('firstTime', 'true');
+          setTimeout(() => {
+            swapArrayElements(this.cards, 2, 4);
+            this.isShowFinger = false;
+          }, 800);
+        }
       }
     });
-
   }
 
   /**
@@ -131,44 +128,71 @@ export class HomePage implements OnInit {
   menuOpen(): void {
     this.menu.enable(true, 'side');
     this.menu.open('side');
-  } 
+  }
 
   /**
    * dragging card item
    * */
-  goToUrl(d: any): void { 
+  goToUrl(d: any): void {
     if (d.active && d.url) {
       this.router.navigateByUrl(d.url);
     }
-  } 
+  }
 
   /**
    * get image src
    * */
-  getImageAddress(d: any): string{
-     return 'assets/image/icon/' + this.getIconClass(d.icon) + '.png';
-  } 
+  getImageAddress(d: any): string {
+    return 'assets/image/icon/' + this.getIconClass(d.icon) + '.png';
+  }
 
   /**
    * when starting drag
    * */
-  onDragStart(event: any, id: number): void { 
-    this.draggingCardId = id; 
-  } 
-  
+  onDragStart(event: any, id: number): void {
+    this.draggingCardId = id;
+  }
+
   /**
    * when dragging over
    * */
-  allowDrop(event: any): void { 
+  allowDrop(event: any): void {
     event.preventDefault();
   }
-  
+
   /**
    * when dropping
    * */
-  onDrop(event: any, id: number): void { 
-    event.preventDefault(); 
-    swapArrayElements(this.cards, this.draggingCardId, id);
+  onDrop(event: any, dropID: number): void {
+    event.preventDefault();
+    swapArrayElements(this.cards, this.draggingCardId, dropID);
   }
-} 
+
+  /**
+   *  touchend event for mobile screen
+   * */
+  onTouchEnd(event: any, id: number): void {
+    var touch = event.changedTouches[0];
+    const x = touch.pageX;
+    const y = touch.pageY;
+    const dropID = this.getArrayIDByPageXY(x, y);
+    swapArrayElements(this.cards, this.draggingCardId, dropID);
+  }
+
+  /**
+   * calculate the array ID according to pageX pageY
+   * @param pageX
+   * @param pageY
+   */
+  getArrayIDByPageXY(pageX: number, pageY: number): number {
+    const width = window.innerWidth;
+    const heighTop = width / 10.8 * 5.4;
+    const unitCard = width / 3;
+    const a1 = Math.floor(pageX / unitCard);
+    const b1 = Math.floor((pageY - heighTop) / unitCard);
+    return a1 + b1 * 3;
+  }
+
+
+}
 

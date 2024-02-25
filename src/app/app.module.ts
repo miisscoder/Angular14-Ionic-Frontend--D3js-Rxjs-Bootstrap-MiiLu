@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -18,7 +19,8 @@ import { SubscriptionService } from 'src/app/services/common/subscription.servic
 @NgModule({
     declarations: [AppComponent],
     imports: [
-        BrowserModule,
+      BrowserModule,
+      BrowserAnimationsModule,
         IonicModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,

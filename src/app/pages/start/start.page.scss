@@ -3,8 +3,7 @@
     overflow:hidden;
 }
 ion-header {
-    height: 2.3%;
-    /*opacity: 0.5;*/
+    height: 2.3%; 
 
     .blue-bar {
         width: 70%;
@@ -30,9 +29,9 @@ ion-content {
 
 
     .logo {
-        width: 41%;
-        height: auto;
-        margin: 0 auto 0;
+        width: auto;
+        height: 20%;
+        margin: 40% auto 0;
     }
 
     ion-icon {

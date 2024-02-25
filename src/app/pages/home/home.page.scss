@@ -76,7 +76,7 @@ ion-content {
     width: 33.3333%;
     top: 5.4rem;
     right: 0;
-    animation: moveFinger .5s linear forwards; 
+    transition:1s;
 
     .group-finger-content {
       position: relative;
@@ -152,13 +152,10 @@ ion-content {
 
   @keyframes moveFinger {
     0% {
-      top: 5.4rem;
-      right: 0;
+      transform: translate(0, 0);
     }
 
-    100% {
-      top: calc(5.4rem + 33.33vw);
-      right: 33.33vw;
-      display:none;
+    100% {  
+      transform: translate(-33.33vw, 33.33vw);
     }
   }

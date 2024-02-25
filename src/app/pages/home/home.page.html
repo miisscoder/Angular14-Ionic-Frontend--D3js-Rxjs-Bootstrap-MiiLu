@@ -13,13 +13,17 @@
     </div>
   </div>
   <div class="gs flex start top wrap">
-    <div class="g" [ngClass]="{'active': item.active === true}"
-         (drop)="onDrop($event,  item.id)"
+    <div class="g"
+         [ngClass]="{'active': item.active === true}"
+         (drop)="onDrop($event,  offsetID)"
          (dragover)="allowDrop($event)"
-         *ngFor="let item of cards"
-         [routerLink]="item.url">
+         *ngFor="let item of cards; let offsetID = index"
+         [routerLink]="item.url"
+         [id]="item.id">
       <div class="g-content flex column center middle"
-           (dragstart)="onDragStart($event,  item.id)"
+           (dragstart)="onDragStart($event,  offsetID)"
+           (touchstart)="onDragStart($event, offsetID)" 
+           (touchend)="onTouchEnd($event,  offsetID)"
            draggable="true">
         <div class="rect">
           <img [src]="getImageAddress(item)">
@@ -27,12 +31,12 @@
         <div class="text">{{item.text}}</div>
       </div>
     </div>
-  </div>
-
-  <div class="group-finger" 
-    [@moveFinger]="isMoveFinger ? 'startMoveFinger' : ''endMoveFinger''" >
+  </div> 
+  <div class="group-finger" *ngIf="isShowFinger"
+       [@moveFinger]="'startMoveFinger'">
     <div class="group-finger-content">
-      <img src="../../../assets/image/finger.png" class="finger" />
+      <img src="../../../assets/image/finger.png"
+           class="finger" />
       <div class="g g-move"
            [ngClass]="{'active': cards[2].active === true}">
         <div class="g-content flex column center middle">

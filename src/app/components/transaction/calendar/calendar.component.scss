@@ -1,4 +1,4 @@
-@import 'src/styles/font'; 
+@import 'src/styles/font';
 
 .week-section {
   margin: 0.8rem 0.42rem;
@@ -69,14 +69,14 @@
           }
         }
 
-        .income {
+        .income, .spend {
           color: #0099cc;
           font-family: 'Quicksand-Bold';
+          cursor: pointer;
         }
 
         .spend {
-          color: #ff6633;
-          font-family: 'Quicksand-Bold';
+          color: #ff6633; 
         }
       }
 

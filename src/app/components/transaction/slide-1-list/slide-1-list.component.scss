@@ -4,9 +4,14 @@
 
   .tr {
     border-bottom: 0.01rem solid #e4e4e4;
+    cursor: pointer;
 
     &:first-of-type, &:last-of-type {
       border-bottom: none;
+    }
+
+    &:first-of-type {
+      cursor: unset;
     }
 
     .td {
@@ -73,6 +78,7 @@
         width: 37%;
         text-align: left;
         text-transform: uppercase;
+        cursor: pointer;
       }
 
       &.th-2 {
@@ -83,6 +89,7 @@
       &.th-3 {
         width: 25%;
         text-align: right;
+        cursor: pointer;
       }
     }
 
